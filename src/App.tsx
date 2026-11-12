@@ -1,42 +1,47 @@
-import { SplineHero } from './components/SplineHero';
-import { Skills } from './components/Skills';
-import { Experience } from './components/Experience';
-import { Interests } from './components/Interests';
-
-export function SectionHeader({ label }: { label: string }) {
-  return (
-    <h2 className="text-2xl font-bold text-white mb-6 font-mono">
-      <span className="text-neutral-700">~/</span>
-      {label}
-    </h2>
-  );
-}
+import { EDUCATION, EXPERIENCE, FEATURED, MISC, PROJECTS, RESEARCH_INTRO } from './content';
+import { Intro } from './components/Intro';
+import { Section, SubHeading } from './components/Section';
+import { Timeline } from './components/Timeline';
+import { WorkItem } from './components/WorkItem';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-[#080808] text-white">
-      <div className="max-w-5xl mx-auto px-4 py-8">
-        {/* Nav */}
-        <nav className="flex items-center justify-between mb-10">
-          <span className="font-mono text-sm tracking-wider text-white">alessa weiler</span>
-          <div className="flex gap-6 text-sm font-mono text-neutral-500">
-            <a href="#skills" className="hover:text-white transition-colors">skills</a>
-            <a href="#experience" className="hover:text-white transition-colors">experience</a>
-          </div>
-        </nav>
+    <main className="mx-auto w-full max-w-[800px] pb-10">
+      <Intro />
 
-        {/* Hero — Spline 3D */}
-        <SplineHero />
+      <Section title="Research">
+        {RESEARCH_INTRO.map((p) => (
+          <p key={p} className="mb-3">
+            {p}
+          </p>
+        ))}
+        <SubHeading>Featured work</SubHeading>
+        {FEATURED.map((entry) => (
+          <WorkItem key={entry.title} entry={entry} />
+        ))}
+        <SubHeading>Other projects</SubHeading>
+        {PROJECTS.map((entry) => (
+          <WorkItem key={entry.title} entry={entry} />
+        ))}
+      </Section>
 
-        {/* Skills */}
-        <Skills />
+      <Section title="Experience">
+        <Timeline entries={EXPERIENCE} />
+      </Section>
 
-        {/* Experience */}
-        <Experience />
+      <Section title="Education">
+        <Timeline entries={EDUCATION} />
+      </Section>
 
-        {/* Interests */}
-        <Interests />
-      </div>
-    </div>
+      <Section title="Miscellanea">
+        {MISC.map((p) => (
+          <p key={p}>{p}</p>
+        ))}
+      </Section>
+
+      <footer className="px-5 pt-10 text-right text-xs">
+        Design inspired by <a href="https://github.com/jonbarron/jonbarron_website">Jon Barron</a>'s site.
+      </footer>
+    </main>
   );
 }
